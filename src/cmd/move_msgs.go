@@ -13,6 +13,18 @@ import (
 	"github.com/spf13/cobra"
 )
 
+/*
+todo:
+- specify the rate
+- dispose connections on ^C
+- declare queue on IN rabbit if it doesn't exists
+- better output to show messages consumed/sent
+*/
+
+// Flags
+var contextNameIn string
+var contextNameOut string
+
 // moveMsgsCmd represents the moveMsgs command
 var moveMsgsCmd = &cobra.Command{
 	Use:   "move-msgs",
@@ -22,13 +34,18 @@ var moveMsgsCmd = &cobra.Command{
 
 		forever := make(chan bool)
 
-		_, fromCh := api.ConnectAndGetRabbitChannel(config.LocalRabbit())
-		// toCh := api.ConnectAndGetRabbitChannel(config.RabbitMqConfig{Host: "localhost", User: "admin", Password: "admin", Port: "5673", AdminPort: "15673"})
-		_, toCh := api.ConnectAndGetRabbitChannel(config.LocalRabbit())
+		contextOut := config.GetContext(contextNameOut)
+		_, fromCh := api.ConnectAndGetRabbitChannel(contextOut)
+
+		contextIn := config.GetContext(contextNameIn)
+		_, toCh := api.ConnectAndGetRabbitChannel(contextIn)
 
 		go captureSigint()
 
-		api.ConsumeAndSend(fromCh, toCh, "teste1", "teste2")
+		outQueues := api.GetQueues(contextOut)
+		for _, q := range outQueues {
+			go api.ConsumeAndSend(fromCh, toCh, q, q)
+		}
 
 		<-forever
 	},
@@ -48,13 +65,8 @@ func captureSigint() {
 func init() {
 	rootCmd.AddCommand(moveMsgsCmd)
 
-	// Here you will define your flags and configuration settings.
-
-	// Cobra supports Persistent Flags which will work for this command
-	// and all subcommands, e.g.:
-	// moveMsgsCmd.PersistentFlags().String("foo", "", "A help for foo")
-
-	// Cobra supports local flags which will only run when this command
-	// is called directly, e.g.:
-	// moveMsgsCmd.Flags().BoolP("toggle", "t", false, "Help message for toggle")
+	moveMsgsCmd.Flags().StringVarP(&contextNameOut, "context-out", "o", "", "(required) specify which context will have its messages WITHDRAWN")
+	moveMsgsCmd.MarkFlagRequired("context-out")
+	moveMsgsCmd.Flags().StringVarP(&contextNameIn, "context-in", "i", "", "(required) specify which context will RECEIVE the messages")
+	moveMsgsCmd.MarkFlagRequired("context-in")
 }

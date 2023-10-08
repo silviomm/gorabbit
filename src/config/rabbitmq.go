@@ -1,4 +1,4 @@
-package models
+package config
 
 type RabbitMqConfig struct {
 	Host      string
@@ -11,8 +11,8 @@ type RabbitMqConfig struct {
 func LocalRabbit() RabbitMqConfig {
 	return RabbitMqConfig{
 		Host:      "localhost",
-		User:      "admin",
-		Password:  "admin",
+		User:      "guest",
+		Password:  "guest",
 		Port:      "5672",
 		AdminPort: "15672",
 	}
