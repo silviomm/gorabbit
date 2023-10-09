@@ -22,7 +22,7 @@ func InitConfig() {
 
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println("Config file not found. Creating default config file at ", home)
-		SetDefaultContext()
+		CreateContext("default", LocalRabbit())
 		viper.SafeWriteConfig() // creates file only if it does not exists
 	}
 

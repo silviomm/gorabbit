@@ -17,6 +17,14 @@ func GetCurrentContextName() string {
 	return CurrentContextName
 }
 
+func ContextExists(name string) bool {
+	contextSub := viper.Sub(name)
+	if contextSub == nil {
+		return false
+	}
+	return true
+}
+
 func GetContext(name string) RabbitMqConfig {
 	contextSub := viper.Sub(name)
 	if contextSub == nil {
@@ -31,13 +39,8 @@ func GetContext(name string) RabbitMqConfig {
 	return context
 }
 
-func SetContext(name string, c RabbitMqConfig) {
+func SetCurrentContext(name string) {
 	viper.Set(Config_CurrentContext, name)
-	viper.Set(name+".Host", c.Host)
-	viper.Set(name+".Port", c.Port)
-	viper.Set(name+".AdminPort", c.AdminPort)
-	viper.Set(name+".User", c.User)
-	viper.Set(name+".Password", c.Password)
 	viper.WriteConfig()
 
 	CurrentContextName = name
@@ -52,6 +55,12 @@ func SetContext(name string, c RabbitMqConfig) {
 	}
 }
 
-func SetDefaultContext() {
-	SetContext("default", LocalRabbit())
+func CreateContext(name string, c RabbitMqConfig) {
+	viper.Set(Config_CurrentContext, name)
+	viper.Set(name+".Host", c.Host)
+	viper.Set(name+".Port", c.Port)
+	viper.Set(name+".AdminPort", c.AdminPort)
+	viper.Set(name+".User", c.User)
+	viper.Set(name+".Password", c.Password)
+	viper.WriteConfig()
 }

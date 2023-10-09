@@ -5,33 +5,28 @@ package cmd
 
 import (
 	config "gorabbit/src/config"
-	prompts "gorabbit/src/prompt"
 	"log"
 
 	"github.com/spf13/cobra"
 )
 
 // currentContextCmd represents the currentContext command
-var newContextCmd = &cobra.Command{
-	Use:   "new",
-	Short: "Create new context",
+var setContextCmd = &cobra.Command{
+	Use:   "set",
+	Short: "Set current context",
 	Run: func(cmd *cobra.Command, args []string) {
-		result := prompts.PromptContext()
-		if result == nil {
-			log.Fatal("Error creating new context")
+		if len(args) == 0 {
+			log.Fatal("Must provide context name")
 		}
-
-		config.CreateContext(result.Name, config.RabbitMqConfig{
-			Host:      result.Host,
-			Port:      result.Port,
-			AdminPort: result.AdminPort,
-			User:      result.User,
-			Password:  result.Password})
+		if !config.ContextExists(args[0]) {
+			log.Fatalf("Context '%s' not found", args[0])
+		}
+		config.SetCurrentContext(args[0])
 	},
 }
 
 func init() {
-	contextCmd.AddCommand(newContextCmd)
+	contextCmd.AddCommand(setContextCmd)
 
 	// Here you will define your flags and configuration settings.
 
