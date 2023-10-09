@@ -31,12 +31,27 @@ func GetContext(name string) RabbitMqConfig {
 	return context
 }
 
-func SetDefaultContext() {
-	viper.Set("default.Host", LocalRabbit().Host)
-	viper.Set("default.Port", LocalRabbit().Port)
-	viper.Set("default.AdminPort", LocalRabbit().AdminPort)
-	viper.Set("default.User", LocalRabbit().User)
-	viper.Set("default.Password", LocalRabbit().Password)
-	// viper.Set("default", LocalRabbit()) // viper cant recognise it from the beggining.
+func SetContext(name string, c RabbitMqConfig) {
+	viper.Set(Config_CurrentContext, name)
+	viper.Set(name+".Host", c.Host)
+	viper.Set(name+".Port", c.Port)
+	viper.Set(name+".AdminPort", c.AdminPort)
+	viper.Set(name+".User", c.User)
+	viper.Set(name+".Password", c.Password)
 	viper.WriteConfig()
+
+	CurrentContextName = name
+	context := viper.Sub(CurrentContextName)
+	if context == nil {
+		log.Fatal("Error reading context", CurrentContextName)
+	}
+
+	err := context.Unmarshal(&CurrentContext)
+	if err != nil {
+		log.Fatal("Error loading context", CurrentContextName)
+	}
+}
+
+func SetDefaultContext() {
+	SetContext("default", LocalRabbit())
 }

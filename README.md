@@ -1,3 +1,5 @@
 Roadmap:
 - Different output formats;
-- Configuration for rabbitmq by file;
+- Default values rabbitmqconfig prompt;
+- Set currentContext;
+- 
