@@ -1,37 +1,26 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package cmdcontext
 
 import (
+	"fmt"
 	config "gorabbit/src/config"
-	prompts "gorabbit/src/prompt"
-	"log"
 
 	"github.com/spf13/cobra"
 )
 
 // currentContextCmd represents the currentContext command
-var newContextCmd = &cobra.Command{
-	Use:   "new",
-	Short: "Create new context",
+var listContextCmd = &cobra.Command{
+	Use:   "list",
+	Short: "List contexts",
 	Run: func(cmd *cobra.Command, args []string) {
-		result := prompts.PromptContext()
-		if result == nil {
-			log.Fatal("Error creating new context")
-		}
-
-		config.CreateContext(result.Name, config.RabbitMqConfig{
-			Host:      result.Host,
-			Port:      result.Port,
-			AdminPort: result.AdminPort,
-			User:      result.User,
-			Password:  result.Password})
+		fmt.Println(config.ListContexts())
 	},
 }
 
 func init() {
-	contextCmd.AddCommand(newContextCmd)
+	contextCmd.AddCommand(listContextCmd)
 
 	// Here you will define your flags and configuration settings.
 

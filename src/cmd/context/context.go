@@ -1,9 +1,11 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package cmdcontext
 
 import (
+	root "gorabbit/src/cmd"
+
 	"github.com/spf13/cobra"
 )
 
@@ -15,7 +17,7 @@ var contextCmd = &cobra.Command{
 }
 
 func init() {
-	rootCmd.AddCommand(contextCmd)
+	root.RootCmd.AddCommand(contextCmd)
 
 	// Here you will define your flags and configuration settings.
 

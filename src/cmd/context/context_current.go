@@ -1,7 +1,7 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package cmdcontext
 
 import (
 	"fmt"
@@ -11,16 +11,16 @@ import (
 )
 
 // currentContextCmd represents the currentContext command
-var listContextCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List contexts",
+var currentContextCmd = &cobra.Command{
+	Use:   "current",
+	Short: "Get current context",
 	Run: func(cmd *cobra.Command, args []string) {
-		fmt.Println(config.ListContexts())
+		fmt.Println(config.CurrentContextName)
 	},
 }
 
 func init() {
-	contextCmd.AddCommand(listContextCmd)
+	contextCmd.AddCommand(currentContextCmd)
 
 	// Here you will define your flags and configuration settings.
 

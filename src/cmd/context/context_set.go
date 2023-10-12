@@ -1,10 +1,11 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package cmdcontext
 
 import (
 	config "gorabbit/src/config"
+
 	"log"
 
 	"github.com/spf13/cobra"

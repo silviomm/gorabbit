@@ -63,7 +63,7 @@ func captureSigint() {
 }
 
 func init() {
-	rootCmd.AddCommand(moveMsgsCmd)
+	RootCmd.AddCommand(moveMsgsCmd)
 
 	moveMsgsCmd.Flags().StringVarP(&contextNameOut, "context-out", "o", "", "(required) specify which context will have its messages WITHDRAWN")
 	moveMsgsCmd.MarkFlagRequired("context-out")

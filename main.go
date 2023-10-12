@@ -5,6 +5,8 @@ package main
 
 import (
 	"gorabbit/src/cmd"
+	_ "gorabbit/src/cmd/context"
+	_ "gorabbit/src/cmd/queues"
 	config "gorabbit/src/config"
 )
 
