@@ -1,3 +1,3 @@
 package config
 
-const Config_CurrentContext = "currentContext"
+const Config_CurrentContext = "currentcontext"

@@ -9,6 +9,20 @@ import (
 var CurrentContextName string
 var CurrentContext RabbitMqConfig
 
+func ListContexts() []string {
+	settings := viper.AllSettings()
+	var contexts []string
+
+	for k, _ := range settings {
+		if k == Config_CurrentContext {
+			continue
+		}
+		contexts = append(contexts, k)
+	}
+
+	return contexts
+}
+
 func GetCurrentContext() RabbitMqConfig {
 	return CurrentContext
 }
