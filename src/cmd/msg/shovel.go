@@ -1,7 +1,7 @@
 /*
 Copyright © 2023 NAME HERE <EMAIL ADDRESS>
 */
-package cmd
+package cmdmsg
 
 import (
 	"fmt"
@@ -13,21 +13,13 @@ import (
 	"github.com/spf13/cobra"
 )
 
-/*
-todo:
-- specify the rate
-- dispose connections on ^C
-- declare queue on IN rabbit if it doesn't exists
-- better output to show messages consumed/sent
-*/
-
 // Flags
 var contextNameIn string
 var contextNameOut string
 
 // moveMsgsCmd represents the moveMsgs command
-var moveMsgsCmd = &cobra.Command{
-	Use:   "move-msgs",
+var shovelCmd = &cobra.Command{
+	Use:   "shovel",
 	Short: "Move msgs from one rabbitmq to another",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println("Moving messages. A SIGINT (^C) can be called to interrupt the program gracefully...")
@@ -63,10 +55,10 @@ func captureSigint() {
 }
 
 func init() {
-	RootCmd.AddCommand(moveMsgsCmd)
+	msgCmd.AddCommand(shovelCmd)
 
-	moveMsgsCmd.Flags().StringVarP(&contextNameOut, "context-out", "o", "", "(required) specify which context will have its messages WITHDRAWN")
-	moveMsgsCmd.MarkFlagRequired("context-out")
-	moveMsgsCmd.Flags().StringVarP(&contextNameIn, "context-in", "i", "", "(required) specify which context will RECEIVE the messages")
-	moveMsgsCmd.MarkFlagRequired("context-in")
+	shovelCmd.Flags().StringVarP(&contextNameOut, "context-out", "o", "", "(required) specify which context will have its messages WITHDRAWN")
+	shovelCmd.MarkFlagRequired("context-out")
+	shovelCmd.Flags().StringVarP(&contextNameIn, "context-in", "i", "", "(required) specify which context will RECEIVE the messages")
+	shovelCmd.MarkFlagRequired("context-in")
 }
