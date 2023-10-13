@@ -2,6 +2,7 @@ package api
 
 import (
 	"encoding/json"
+	"fmt"
 	"io"
 	"log"
 	"net/http"
@@ -17,7 +18,12 @@ func CreateQueue(rCh *amqp.Channel, name string) (amqp.Queue, error) {
 
 func DeleteQueues(rCh *amqp.Channel, queues []string) {
 	for _, q := range queues {
-		rCh.QueueDelete(q, false, false, true)
+		_, err := rCh.QueueDelete(q, false, false, true)
+		if err != nil {
+			fmt.Println("Error", err, "deleting", q)
+			continue
+		}
+		fmt.Println("Deleted: ", q)
 	}
 }
 

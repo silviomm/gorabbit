@@ -15,6 +15,7 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 ### Added
 - `-q` flag on `msg shovel` CMD to choose which queues will be shoveled; 
 - CMD `queues new`;
+- `-q` flag on `queues delete` CMD to choose which queues will be deleted (defaults to all); 
 
 
 ## [0.1.0] - 2023-10-12
