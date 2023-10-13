@@ -14,6 +14,7 @@ import (
 )
 
 // Flags
+var moveQueues []string
 var contextNameIn string
 var contextNameOut string
 
@@ -34,8 +35,10 @@ var shovelCmd = &cobra.Command{
 
 		go captureSigint()
 
-		outQueues := api.GetQueues(contextOut)
-		for _, q := range outQueues {
+		if len(moveQueues) == 0 {
+			moveQueues = api.GetQueues(contextOut)
+		}
+		for _, q := range moveQueues {
 			go api.ConsumeAndSend(fromCh, toCh, q, q)
 		}
 
@@ -61,4 +64,5 @@ func init() {
 	shovelCmd.MarkFlagRequired("context-out")
 	shovelCmd.Flags().StringVarP(&contextNameIn, "context-in", "i", "", "(required) specify which context will RECEIVE the messages")
 	shovelCmd.MarkFlagRequired("context-in")
+	shovelCmd.Flags().StringSliceVarP(&moveQueues, "queues", "q", []string{}, "Queues that will be shoveled")
 }

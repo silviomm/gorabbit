@@ -7,7 +7,6 @@ Roadmap:
 - consume msgs;
 - get/delete based on regex;
 - shovel:
-    - move-msgs choose which queue you wanna transfer;
     - specify the rate
     - dispose connections on ^C
     - declare queue on IN rabbit if it doesn't exists (option by flag)

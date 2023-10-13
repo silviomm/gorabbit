@@ -10,6 +10,7 @@ import (
 )
 
 func ConsumeAndSend(fromChannel *amqp.Channel, toChannel *amqp.Channel, q1 string, q2 string) {
+	fmt.Println("Shovelling queue: ", q1)
 	messages, err := fromChannel.Consume(
 		q1,    // queue name
 		"",    // consumer
