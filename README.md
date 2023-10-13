@@ -11,3 +11,4 @@ Roadmap:
     - dispose connections on ^C
     - declare queue on IN rabbit if it doesn't exists (option by flag)
     - better output to show messages consumed/sent
+    - ignore if queue to consume does not exist but send a warning;
