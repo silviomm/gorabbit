@@ -7,7 +7,19 @@ import (
 	"net/http"
 
 	config "gorabbit/src/config"
+
+	amqp "github.com/rabbitmq/amqp091-go"
 )
+
+func CreateQueue(rCh *amqp.Channel, name string) (amqp.Queue, error) {
+	return rCh.QueueDeclare(name, false, false, false, false, nil)
+}
+
+func DeleteQueues(rCh *amqp.Channel, queues []string) {
+	for _, q := range queues {
+		rCh.QueueDelete(q, false, false, true)
+	}
+}
 
 func GetQueues(config config.RabbitMqConfig) []string {
 	client := &http.Client{}

@@ -7,27 +7,32 @@ import (
 	"fmt"
 	"gorabbit/src/api"
 	config "gorabbit/src/config"
+	"log"
 
 	"github.com/spf13/cobra"
 )
 
 // deleteQueuesCmd represents the deleteQueues command
-var deleteQueuesCmd = &cobra.Command{
-	Use:   "delete",
-	Short: "Delete all queues on rabbitmq",
+var newQueuesCmd = &cobra.Command{
+	Use:   "new",
+	Short: "Create queue on rabbitmq",
 	Run: func(cmd *cobra.Command, args []string) {
-		_, ch := api.ConnectAndGetRabbitChannel(config.CurrentContext)
-		queues := api.GetQueues(config.CurrentContext)
-		if len(queues) <= 0 {
-			fmt.Println("No queues to delete")
-		} else {
-			api.DeleteQueues(ch, queues)
+		if len(args) == 0 {
+			log.Fatal("Must provide queue name as argument")
 		}
+		qName := args[0]
+		_, ch := api.ConnectAndGetRabbitChannel(config.CurrentContext)
+		_, err := api.CreateQueue(ch, qName)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+		fmt.Println(qName, "created successfully")
 	},
 }
 
 func init() {
-	queuesCmd.AddCommand(deleteQueuesCmd)
+	queuesCmd.AddCommand(newQueuesCmd)
 
 	// Here you will define your flags and configuration settings.
 

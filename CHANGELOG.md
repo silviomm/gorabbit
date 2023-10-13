@@ -6,11 +6,16 @@ and this project adheres to [Semantic Versioning](http://semver.org/).
 
 ## [Unreleased]
 
+### Fixed
+- `queues delete` connected to CurrentContext rabbit but used LocalRabbit config to get queue names to delete;
+
 ### Changed
 - `gorabbit move-msgs` command now is `gorabbit msg shovel`
 
 ### Added
 - `-q` flag on `msg shovel` CMD to choose which queues will be shoveled; 
+- CMD `queues new`;
+
 
 ## [0.1.0] - 2023-10-12
 
