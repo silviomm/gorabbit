@@ -7,6 +7,7 @@ Roadmap:
 - consume msgs;
 - get/delete based on regex;
 - shovel:
+    - when consumed all msgs, send notification to channel to stop consuming (option by flag) 
     - specify the rate
     - dispose connections on ^C
     - declare queue on IN rabbit if it doesn't exists (option by flag)

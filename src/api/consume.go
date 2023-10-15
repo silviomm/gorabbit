@@ -2,12 +2,28 @@ package api
 
 import (
 	"fmt"
+	"log"
 	"time"
 
 	utils "gorabbit/src/utils"
 
 	amqp "github.com/rabbitmq/amqp091-go"
 )
+
+func SendMsg(qName string, msg string, rCh *amqp.Channel) {
+	err := rCh.Publish(
+		"",    // exchange
+		qName, // routing key
+		false, // mandatory
+		false, // immediate
+		amqp.Publishing{
+			Body:        []byte(msg),
+			ContentType: "text/plain",
+		})
+	if err != nil {
+		log.Fatal("Error sending msg: ", err)
+	}
+}
 
 func ConsumeAndSend(fromChannel *amqp.Channel, toChannel *amqp.Channel, q1 string, q2 string) {
 	fmt.Println("Shovelling queue: ", q1)

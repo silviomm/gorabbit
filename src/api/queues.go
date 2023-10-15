@@ -12,6 +12,10 @@ import (
 	amqp "github.com/rabbitmq/amqp091-go"
 )
 
+func GetQueue(rCh *amqp.Channel, name string) (amqp.Queue, error) {
+	return rCh.QueueDeclarePassive(name, false, false, false, false, nil)
+}
+
 func CreateQueue(rCh *amqp.Channel, name string) (amqp.Queue, error) {
 	return rCh.QueueDeclare(name, false, false, false, false, nil)
 }
