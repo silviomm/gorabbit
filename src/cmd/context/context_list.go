@@ -12,8 +12,10 @@ import (
 
 // currentContextCmd represents the currentContext command
 var listContextCmd = &cobra.Command{
-	Use:   "list",
-	Short: "List contexts",
+	Use:     "list",
+	Short:   "List contexts",
+	Example: "gorabbit context list",
+	Long:    "Lists all RabbitMQ contexts available.",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(config.ListContexts())
 	},

@@ -1,4 +1,8 @@
-Roadmap:
+## Install
+
+[Download the latest binary](https://github.com/silviomm/gorabbit/releases) and place it under a folder in your PATH;
+
+## Roadmap:
 - Different output formats;
 - Default values rabbitmqconfig prompt;
 - Accept flags to fill prompts;

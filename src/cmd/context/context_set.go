@@ -13,8 +13,10 @@ import (
 
 // currentContextCmd represents the currentContext command
 var setContextCmd = &cobra.Command{
-	Use:   "set",
-	Short: "Set current context",
+	Use:     "set",
+	Short:   "Set context",
+	Example: "gorabbit context set [context-name]",
+	Long:    "Set the RabbitMQ context to be used by other commands.",
 	Run: func(cmd *cobra.Command, args []string) {
 		if len(args) == 0 {
 			log.Fatal("Must provide context name")
