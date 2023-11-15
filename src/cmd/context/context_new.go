@@ -14,8 +14,10 @@ import (
 
 // currentContextCmd represents the currentContext command
 var newContextCmd = &cobra.Command{
-	Use:   "new",
-	Short: "Create new context",
+	Use:     "new",
+	Short:   "Create new context",
+	Example: "gorabbit context new [context-name]",
+	Long:    "Creates a new RabbitMQ context. After creating, you need to set the context.",
 	Run: func(cmd *cobra.Command, args []string) {
 		result := prompts.PromptContext()
 		if result == nil {

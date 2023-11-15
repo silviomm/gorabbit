@@ -12,8 +12,7 @@ import (
 // contextCmd represents the context command
 var contextCmd = &cobra.Command{
 	Use:   "context",
-	Short: "A brief description of your command",
-	Long:  `TODO`,
+	Short: "Commands to deal with RabbitMQ contexts",
 }
 
 func init() {

@@ -12,8 +12,10 @@ import (
 
 // currentContextCmd represents the currentContext command
 var currentContextCmd = &cobra.Command{
-	Use:   "current",
-	Short: "Get current context",
+	Use:     "current",
+	Short:   "Get current context",
+	Example: "gorabbit context current",
+	Long:    "Returns the current RabbitMQ context being used",
 	Run: func(cmd *cobra.Command, args []string) {
 		fmt.Println(config.CurrentContextName)
 	},
